@@ -4,7 +4,7 @@ build-backend = "setuptools.build_meta"
 
 [project]
 name = "sam3d"
-version = "0.1.0"
+version = "0.1.1"
 description = "Unified Python interface for Meta SAM 3D Body and SAM 3D Objects"
 readme = "README.md"
 requires-python = ">=3.10"
@@ -15,6 +15,23 @@ dependencies = [
 
 [project.optional-dependencies]
 inference = []
+service = [
+  "fastapi>=0.110.0",
+  "uvicorn>=0.29.0",
+]
+download = [
+  "huggingface_hub>=0.23.0",
+  "modelscope>=1.16.0",
+]
+
+[project.urls]
+Homepage = "https://github.com/rudaoshi/sam3d"
+Repository = "https://github.com/rudaoshi/sam3d"
+Issues = "https://github.com/rudaoshi/sam3d/issues"
+
+[project.scripts]
+sam3d-http = "sam3d.service:main"
+sam3d-download = "sam3d.download_models:main"
 
 [tool.setuptools]
 package-dir = {"" = "src"}

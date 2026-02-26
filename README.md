@@ -68,3 +68,59 @@ obj_result["gaussian_splat"].save_ply("object.ply")
 
 - `sam_3d_body`（来自 `facebookresearch/sam-3d-body`）
 - `sam3d_objects`（来自 `facebookresearch/sam-3d-objects`）
+
+## 6. HTTP API 服务模式
+
+安装服务依赖：
+
+```bash
+pip install "sam3d[service]"
+```
+
+启动服务：
+
+```bash
+sam3d-http --workspace-dir ~/.spwm/models --device cuda --host 0.0.0.0 --port 8000
+```
+
+接口：
+
+- `GET /health`
+- `GET /info`
+- `POST /predict/body`
+- `POST /predict/objects`
+
+## 7. 模型下载脚本（HF / ModelScope）
+
+安装下载依赖：
+
+```bash
+pip install "sam3d[download]"
+```
+
+默认（body/objects 从 ModelScope，moge 从 HuggingFace）：
+
+```bash
+sam3d-download --workspace-dir ~/.spwm/models
+```
+
+可分别指定来源：
+
+```bash
+sam3d-download \
+  --workspace-dir ~/.spwm/models \
+  --body-source modelscope \
+  --objects-source modelscope \
+  --moge-source huggingface
+```
+
+可覆盖模型 ID（例如全部走 HuggingFace）：
+
+```bash
+sam3d-download \
+  --workspace-dir ~/.spwm/models \
+  --body-source huggingface \
+  --objects-source huggingface \
+  --body-model-id <hf-body-model-id> \
+  --objects-model-id <hf-objects-model-id>
+```

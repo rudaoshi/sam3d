@@ -80,6 +80,7 @@ def create_app(
     compile_objects: bool = False,
 ):
     from fastapi import FastAPI, HTTPException
+    from fastapi.middleware.cors import CORSMiddleware
 
     state = ServiceState(
         workspace_dir=workspace_dir,
@@ -87,6 +88,13 @@ def create_app(
         compile_objects=compile_objects,
     )
     app = FastAPI(title="sam3d-http", version="0.1.0")
+    app.add_middleware(
+        CORSMiddleware,
+        allow_origins=["*"],
+        allow_credentials=True,
+        allow_methods=["*"],
+        allow_headers=["*"],
+    )
     app.state.sam3d_state = state
 
     @app.get("/health")
@@ -157,4 +165,3 @@ def main() -> None:
         compile_objects=args.compile_objects,
     )
     uvicorn.run(app, host=args.host, port=args.port)
-

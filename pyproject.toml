@@ -23,6 +23,9 @@ download = [
   "huggingface_hub>=0.23.0",
   "modelscope>=1.16.0",
 ]
+mcp = [
+  "mcp>=1.2.0",
+]
 
 [project.urls]
 Homepage = "https://github.com/rudaoshi/sam3d"
@@ -31,6 +34,7 @@ Issues = "https://github.com/rudaoshi/sam3d/issues"
 
 [project.scripts]
 sam3d-http = "sam3d.service:main"
+sam3d-mcp = "sam3d.mcp_server:main"
 sam3d-download = "sam3d.download_models:main"
 
 [tool.setuptools]

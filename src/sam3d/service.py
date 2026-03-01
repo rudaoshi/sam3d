@@ -11,6 +11,8 @@ import time
 from typing import Any
 from uuid import uuid4
 
+import traceback
+
 import numpy as np
 from PIL import Image
 from pydantic import BaseModel, Field, model_validator
@@ -237,19 +239,22 @@ def create_app(
             )
             return _to_jsonable(out)
         except Exception as exc:
-            logger.exception(
-                "predict_body failed: inference_type=%s, use_mask=%s, has_bboxes=%s, has_masks=%s, has_cam_int=%s",
+            tb = traceback.format_exception(exc)
+            logger.error(
+                "predict_body failed: inference_type=%s, use_mask=%s, has_bboxes=%s, has_masks=%s, has_cam_int=%s\n%s",
                 req.inference_type,
                 req.use_mask,
                 req.bboxes is not None,
                 req.masks is not None,
                 req.cam_int is not None,
+                "".join(tb),
             )
             raise HTTPException(
                 status_code=400,
                 detail={
                     "error": str(exc),
                     "type": type(exc).__name__,
+                    "traceback": "".join(tb),
                 },
             ) from exc
 
@@ -308,17 +313,20 @@ def create_app(
                 "files": files,
             }
         except Exception as exc:
-            logger.exception(
-                "predict_objects failed: has_mask=%s, seed=%s, has_pointmap=%s",
+            tb = traceback.format_exception(exc)
+            logger.error(
+                "predict_objects failed: has_mask=%s, seed=%s, has_pointmap=%s\n%s",
                 req.mask is not None,
                 req.seed,
                 req.pointmap is not None,
+                "".join(tb),
             )
             raise HTTPException(
                 status_code=400,
                 detail={
                     "error": str(exc),
                     "type": type(exc).__name__,
+                    "traceback": "".join(tb),
                 },
             ) from exc
 

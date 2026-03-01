@@ -38,8 +38,8 @@ def load_body_symbols():
 class ObjectsInference:
     def __init__(self, config_path: str, compile: bool = False):
         add_vendored_meta_to_syspath()
-        # Upstream package imports `sam3d_objects.init` unless this flag is set.
         os.environ.setdefault("LIDRA_SKIP_INIT", "true")
+        os.environ.setdefault("HYDRA_FULL_ERROR", "1")
         from hydra.utils import instantiate
         from omegaconf import OmegaConf
 

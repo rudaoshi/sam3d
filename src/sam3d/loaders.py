@@ -57,6 +57,13 @@ class ObjectsInference:
         mask_u8 = mask.astype(np.uint8) * 255
         if mask_u8.ndim == 2:
             mask_u8 = mask_u8[..., None]
+        h, w = image.shape[:2]
+        mh, mw = mask_u8.shape[:2]
+        if (mh, mw) != (h, w):
+            from PIL import Image as _PILImage
+            mask_2d = mask_u8.squeeze(-1) if mask_u8.ndim == 3 else mask_u8
+            mask_2d = _PILImage.fromarray(mask_2d).resize((w, h), _PILImage.NEAREST)
+            mask_u8 = np.asarray(mask_2d)[..., None]
         return np.concatenate([image[..., :3], mask_u8], axis=-1)
 
     def __call__(

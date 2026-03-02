@@ -1,0 +1,16 @@
+services:
+  sam3d:
+    build:
+      context: ../..
+      dockerfile: sam3d/docker/Dockerfile
+    ports:
+      - "8000:8000"
+    deploy:
+      resources:
+        reservations:
+          devices:
+            - driver: nvidia
+              count: all
+              capabilities: [gpu]
+    shm_size: "8g"
+    restart: unless-stopped

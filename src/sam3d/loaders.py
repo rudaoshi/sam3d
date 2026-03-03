@@ -22,6 +22,7 @@ def _vendored_meta_root() -> Path:
 
 
 def add_vendored_meta_to_syspath() -> None:
+    os.environ.setdefault("LIDRA_SKIP_INIT", "true")
     root = _vendored_meta_root()
     ensure_exists(root / "sam_3d_body", "Vendored SAM 3D Body source")
     ensure_exists(root / "sam3d_objects", "Vendored SAM 3D Objects source")

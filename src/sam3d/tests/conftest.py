@@ -4,7 +4,7 @@ def pytest_addoption(parser):
     parser.addoption(
         "--workspace_dir",
         action="store",
-        default="/home/sun/Projects/embody/models",
+        required=True,
         help="Workspace directory for models"
     )
 

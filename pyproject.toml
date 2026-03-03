@@ -34,7 +34,6 @@ Issues = "https://github.com/rudaoshi/sam3d/issues"
 
 [project.scripts]
 sam3d-http = "sam3d.service:main"
-sam3d-mcp = "sam3d.mcp_server:main"
 sam3d-download = "sam3d.download_models:main"
 
 [tool.setuptools]

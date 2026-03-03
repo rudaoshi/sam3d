@@ -8,6 +8,9 @@ from pathlib import Path
 import numpy as np
 from PIL import Image
 
+os.environ.setdefault("LIDRA_SKIP_INIT", "true")
+os.environ.setdefault("HYDRA_FULL_ERROR", "1")
+
 
 def ensure_exists(path: Path, description: str) -> None:
     if not path.exists():
@@ -38,8 +41,6 @@ def load_body_symbols():
 class ObjectsInference:
     def __init__(self, config_path: str, compile: bool = False):
         add_vendored_meta_to_syspath()
-        os.environ.setdefault("LIDRA_SKIP_INIT", "true")
-        os.environ.setdefault("HYDRA_FULL_ERROR", "1")
         from hydra.utils import instantiate
         from omegaconf import OmegaConf
 
